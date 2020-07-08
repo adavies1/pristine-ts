@@ -1,5 +1,7 @@
 import { lang } from './lang';
-import { tmpl, findAncestor, groupedElemCount, mergeConfig, isFunction } from './utils';
+import { ValidatorConfig, Validator } from './types';
+import { tmpl, findAncestor, mergeConfig, isFunction } from './utils';
+import { defaultValidators } from './validators';
 
 let defaultConfig = {
     classTo: 'form-group',
@@ -13,30 +15,20 @@ let defaultConfig = {
 const PRISTINE_ERROR = 'pristine-error';
 const SELECTOR = "input:not([type^=hidden]):not([type^=submit]), select, textarea";
 const ALLOWED_ATTRIBUTES = ["required", "min", "max", 'minlength', 'maxlength', 'pattern'];
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-const validators = {};
+const validators = {} as {[name: string]: Validator};
 
-const _ = function (name, validator) {
-    validator.name = name;
-    if (!validator.msg)
-        validator.msg = lang[name];
-    if (validator.priority === undefined)
-        validator.priority = 1;
-    validators[name] = validator;
+const _ = function (name: string, validator: ValidatorConfig) {
+    validators[name] = {
+        name,
+        fn: validator.fn,
+        msg: validator.msg || lang[name],
+        priority: validator.priority === undefined ? 1 : validator.priority,
+        halt: Boolean(validator.halt)
+    };
 };
 
-_('text', { fn: (val) => true, priority: 0});
-_('required', { fn: function(val){ return (this.type === 'radio' || this.type === 'checkbox') ? groupedElemCount(this) : val !== undefined && val !== ''}, priority: 99, halt: true});
-_('email', { fn: (val) => !val || EMAIL_REGEX.test(val)});
-_('number', { fn: (val) => !val || !isNaN(parseFloat(val)), priority: 2 });
-_('integer', { fn: (val) => val && /^\d+$/.test(val) });
-_('minlength', { fn: (val, length) => !val || val.length >= parseInt(length) });
-_('maxlength', { fn: (val, length) => !val || val.length <= parseInt(length) });
-_('min', { fn: function(val, limit){ return !val || (this.type === 'checkbox' ? groupedElemCount(this) >= parseInt(limit) : parseFloat(val) >= parseFloat(limit)); } });
-_('max', { fn: function(val, limit){ return !val || (this.type === 'checkbox' ? groupedElemCount(this) <= parseInt(limit) : parseFloat(val) <= parseFloat(limit)); } });
-_('pattern', { fn: (val, pattern) => { let m = pattern.match(new RegExp('^/(.*?)/([gimy]*)$')); return !val || (new RegExp(m[1], m[2])).test(val);} });
-
+Object.keys(defaultValidators).forEach(name => _(name, defaultValidators[name]));
 
 export default function Pristine(form, config, live){
 

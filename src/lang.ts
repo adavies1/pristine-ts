@@ -1,4 +1,4 @@
-export const lang = {
+const lang = {
     required: "This field is required",
     email: "This field requires a valid e-mail address",
     number: "This field requires a number",
@@ -10,3 +10,5 @@ export const lang = {
     max: "Maximum value for this field is ${1}",
     pattern: "Please match the requested format",
 };
+
+export default lang;

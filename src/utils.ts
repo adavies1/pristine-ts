@@ -18,11 +18,11 @@ export function isFunction(obj: any): boolean {
 
 /**
  * Takes a template string and fills in the parameters with values
- * @param msg - The template string (E.G: "Hello {0}, my name is {1}. Do you like the name {1}?")
+ * @param msg - The template string (E.G: "Hello ${0}, my name is ${1}. Do you like the name ${1}?")
  * @param params - The array of values for the string variables to be replaced with. The order is important.
  */
 export function tmpl(msg: string, ...params: string[]) {
-    return msg.replace(/\${([^{}]*)}/g, (match: string, index: number) => params[index]);
+    return msg.replace(/\${([^{}]*)}/g, (match: string, index: number) => params[index] || '');
 }
 
 /**
@@ -32,6 +32,7 @@ export function tmpl(msg: string, ...params: string[]) {
  */
 export function toArray<T>(input: Iterable<T> | T): T[] {
     if(typeof input === 'string') return [input];
+    if(Array.isArray(input)) return input;
     const output = Array.from(input as Iterable<T>);
     return output.length ? output : [input as T];
 }

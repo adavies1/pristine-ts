@@ -6,13 +6,13 @@ import { defaultValidators } from './validators';
 const ALLOWED_ATTRIBUTES = ["required", "min", "max", 'minlength', 'maxlength', 'pattern'];
 const PRISTINE_ERROR = 'pristine-error';
 
-export default class PristineFormInput {
+export class PristineFormInput {
     errorClassElement: HTMLElement;
     _errorTextElement: PristineFormErrorTextElement; // Don't access this when reading, use getter instead
     errorTextParent: HTMLElement;
     errors: string[];
     input: PristineFormInputElement;
-    messages: [];
+    messages: {[name: string]: string};
     params: { [name: string]: string[] };
     pristine: PristineForm;
     validators: ValidatorConfig[];
@@ -21,36 +21,8 @@ export default class PristineFormInput {
         this.input = input as PristineFormInputElement;
         this.pristine = pristineForm;
 
-        this._initValidators();
-        this.validators.sort((a, b) => b.priority - a.priority);
-
-        if(this.pristine.live) {
-            const eventName: string = !~['radio', 'checkbox'].indexOf(this.input.getAttribute('type')) ? 'input' : 'change';
-            this.input.addEventListener(eventName, e => this.validate());
-        }
-
-        this._initErrorElements();
-        this.input.pristine = this.pristine;
-        this.input.pristineInput = this;
-    }
-
-    /**
-     * Creates a reference to the errorClassElement and errorTextParent elements
-     */
-    private _initErrorElements(): void {
-        this.errorClassElement = this.input.closest(this.pristine.config.classTo);
-        if (this.pristine.config.classTo === this.pristine.config.errorTextParent) {
-            this.errorTextParent = this.errorClassElement;
-        } else {
-            this.errorTextParent = this.errorClassElement.querySelector(`.${this.pristine.config.errorTextParent}`);
-        }
-    }
-
-    /**
-     * Goes through all pristine attributes on the form element and adds validators / messages accordingly
-     */
-    private _initValidators(): void {
-        [...this.input.attributes].forEach(attr => {
+        // Init validators
+        Array.from(this.input.attributes).forEach(attr => {
             if(attr.name === 'data-pristine-type') {
                 this._initValidator(attr.value);
             }
@@ -67,6 +39,25 @@ export default class PristineFormInput {
                 this._initValidator(attr.value);
             }
         });
+        this.validators.sort((a, b) => b.priority - a.priority);
+
+        // Init error elements
+        this.errorClassElement = this.input.closest(this.pristine.config.classTo);
+        if (this.pristine.config.classTo === this.pristine.config.errorTextParent) {
+            this.errorTextParent = this.errorClassElement;
+        } else {
+            this.errorTextParent = this.errorClassElement.querySelector(`.${this.pristine.config.errorTextParent}`);
+        }
+
+        // Set up references on input DOM element
+        this.input.pristine = this.pristine;
+        this.input.pristineInput = this;
+
+        // If this is live, set up event listener to react to a field being changed
+        if(this.pristine.live) {
+            const eventName: string = !~['radio', 'checkbox'].indexOf(this.input.getAttribute('type')) ? 'input' : 'change';
+            this.input.addEventListener(eventName, e => this.validate());
+        }
     }
 
     /**
@@ -212,7 +203,7 @@ export default class PristineFormInput {
                     this.errors.push((validator.msg as ValidatorMessageFunction)(this.input.value, params))
                 } else {
                     let msg = this.messages[validator.name] || validator.msg;
-                    this.errors.push(tmpl(msg, ...params));
+                    this.errors.push(tmpl(msg as string, ...params));
                 }
 
                 if (validator.halt === true) break;
@@ -220,4 +211,6 @@ export default class PristineFormInput {
         }
         return valid;
     }
-}
+};
+
+export default PristineFormInput;

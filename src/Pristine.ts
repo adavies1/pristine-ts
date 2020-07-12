@@ -11,9 +11,9 @@ const defaultConfig: PristineFormConfig = {
     errorTextClass: 'text-help'
 };
 
-let currentConfig: PristineFormConfig = defaultConfig;
+let currentConfig: PristineFormConfig = {...defaultConfig};
 
-export default class Pristine {
+export class Pristine {
     constructor(form: HTMLElement, config:PristineFormConfig = currentConfig, live = false) {
         return new PristineForm(form, config, live);
     }
@@ -25,4 +25,6 @@ export default class Pristine {
     static setGlobalConfig(config: PristineFormOptions): void {
         currentConfig = {...defaultConfig, ...config};
     };
-}
+};
+
+export default Pristine;

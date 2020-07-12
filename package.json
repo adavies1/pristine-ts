@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "ts-loader": "^8.0.0",
+    "typescript": "^3.9.6",
+    "webpack": "^4.43.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server --watch --config webpack-dev.config.js"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.12"
+  }
+}

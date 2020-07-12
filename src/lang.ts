@@ -9,6 +9,6 @@ const lang = {
     min: "Minimum value for this field is ${1}",
     max: "Maximum value for this field is ${1}",
     pattern: "Please match the requested format",
-};
+} as {[name: string]: string};
 
 export default lang;

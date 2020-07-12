@@ -5,7 +5,7 @@ import { toArray } from './utils';
 const NOT_PRISTINE_ELEMENT_MSG = 'The given element is not part of a Pristine validated form';
 const SELECTOR = "input:not([type^=hidden]):not([type^=submit]), select, textarea";
 
-export default class PristineForm {
+export class PristineForm {
     form: HTMLElement;
     config: PristineFormConfig;
     live: boolean;
@@ -17,7 +17,7 @@ export default class PristineForm {
         this.form = form;
         this.config = config;
         this.live = live;
-        this.fields = ([...form.querySelectorAll(SELECTOR)] as HTMLInputElement[])
+        this.fields = (Array.from(form.querySelectorAll(SELECTOR)) as HTMLInputElement[])
             .map(input => new PristineFormInput(input, this));
     }
 
@@ -113,3 +113,5 @@ export default class PristineForm {
         return valid;
     };
 };
+
+export default PristineForm;

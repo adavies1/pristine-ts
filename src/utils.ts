@@ -4,8 +4,8 @@ import { PristineFormInputElement } from "./types";
  * Returns the number of elements with the same name that are checked (useful for checkbox groups)
  * @param input - The PristineFormInputElement to match against
  */
-export function groupedElemCount(input: PristineFormInputElement): number {
-    return input.pristine.form.querySelectorAll(`input[name="${input.getAttribute('name')}"]:checked`).length;
+export function groupedElemCount(form: HTMLElement, input: HTMLElement): number {
+    return form.querySelectorAll(`input[name="${input.getAttribute('name')}"]:checked`).length;
 }
 
 /**

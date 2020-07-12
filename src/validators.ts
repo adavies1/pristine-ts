@@ -27,20 +27,20 @@ export const maxlength = (val: string, length: string): boolean => !val || val.l
 
 export const required = function(val: string): boolean {
     return (this.type === 'radio' || this.type === 'checkbox')
-        ? Boolean(groupedElemCount(this))
+        ? Boolean(groupedElemCount(this.pristine.form, this))
         : val !== undefined && val !== ''
 }
 
 export const min = function(val: string, limit: string): boolean {
     return !val || (this.type === 'checkbox'
-        ? groupedElemCount(this) >= parseInt(limit)
+        ? groupedElemCount(this.pristine.form, this) >= parseInt(limit)
         : parseFloat(val) >= parseFloat(limit)
     );
 };
 
 export const max = function(val: string, limit: string): boolean {
     return !val || (this.type === 'checkbox'
-        ? groupedElemCount(this) <= parseInt(limit)
+        ? groupedElemCount(this.pristine.form, this) <= parseInt(limit)
         : parseFloat(val) <= parseFloat(limit)
     );
 }

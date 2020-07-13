@@ -42,4 +42,30 @@ describe('Validators', () => {
             expect(validators.email('email+label()@gmail.com')).toBe(false);
         });
     });
+
+    describe('number', () => {
+        test('it should return true when a value is not present', () => {
+            expect(validators.number('')).toBe(true);
+        });
+
+        test('it should return true when a valid number is passed', () => {
+            expect(validators.number('123456')).toBe(true);
+            expect(validators.number('0')).toBe(true);
+            expect(validators.number('-123456')).toBe(true);
+            expect(validators.number('123.456')).toBe(true);
+            expect(validators.number('0.00000')).toBe(true);
+            expect(validators.number('-123.456')).toBe(true);
+        });
+
+        test('it should return false when an invalid number is passed', () => {
+            expect(validators.number('a123456')).toBe(false);
+            expect(validators.number('0ikjh')).toBe(false);
+            expect(validators.number('-1234b56')).toBe(false);
+            expect(validators.number('123.45,')).toBe(false);
+            expect(validators.number('.')).toBe(false);
+            expect(validators.number('0.0000.')).toBe(false);
+            expect(validators.number('-123.45p')).toBe(false);
+            expect(validators.number('+123.45')).toBe(false);
+        });
+    });
 });

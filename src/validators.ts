@@ -20,7 +20,7 @@ export const addGlobalValidator = (name: string, fn: Function, msg: string = 'Th
 // Validators
 export const text = (val: string): boolean => true;
 export const email = (val: string): boolean => !val || EMAIL_REGEX.test(val);
-export const integer = (val: string): boolean => !val || /^\d+$/.test(val);
+export const integer = (val: string): boolean => !val || /^-?\d+$/.test(val);
 export const number = (val: string): boolean => !val || (/^-?[0-9]+(\.[0-9]*)?$/.test(val) && !isNaN(parseFloat(val)));
 export const minlength = (val: string, length: string): boolean => !val || val.length >= parseInt(length);
 export const maxlength = (val: string, length: string): boolean => !val || val.length <= parseInt(length);

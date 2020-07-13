@@ -115,4 +115,22 @@ describe('Validators', () => {
             expect(validators.minlength('hello', '6')).toBe(false);
         });
     });
+
+    describe('maxlength', () => {
+        test('it should return true when a value is not present', () => {
+            expect(validators.maxlength('', '6')).toBe(true);
+        });
+
+        test('it should return true if a string is shorter than the given maxlength', () => {
+            expect(validators.maxlength('hello', '6')).toBe(true);
+        });
+
+        test('it should return true if a string is the same length as the given maxlength', () => {
+            expect(validators.maxlength('hello', '5')).toBe(true);
+        });
+
+        test('it should return false if a string is longer than the given maxlength', () => {
+            expect(validators.maxlength('hello', '4')).toBe(false);
+        });
+    });
 });

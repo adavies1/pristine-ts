@@ -133,4 +133,121 @@ describe('Validators', () => {
             expect(validators.maxlength('hello', '4')).toBe(false);
         });
     });
+
+    describe('min', () => {
+        describe('For text inputs', () => {
+            test('it should return true when a value is not present', () => {
+                expect(validators.min('', '100')).toBe(true);
+            });
+
+            test('it should return false when an invalid number is passed', () => {
+                expect(validators.min('a12345', '-1000000')).toBe(false);
+                expect(validators.min('0ikj', '-1000000')).toBe(false);
+                expect(validators.min('-1234b5', '-1000000')).toBe(false);
+                expect(validators.min('123.45,', '-1000000')).toBe(false);
+                expect(validators.min('.', '-1000000')).toBe(false);
+                expect(validators.min('0.0000.', '-1000000')).toBe(false);
+                expect(validators.min('-123.45p', '-1000000')).toBe(false);
+                expect(validators.min('+123.4', '-1000000')).toBe(false);
+            });
+
+            test('it should return false when a valid number below the given min value is passed', () => {
+                expect(validators.min('123456', '1000000')).toBe(false);
+                expect(validators.min('0', '1000')).toBe(false);
+                expect(validators.min('-123456', '1000')).toBe(false);
+                expect(validators.min('123.456', '1000')).toBe(false);
+                expect(validators.min('0.00000', '1000')).toBe(false);
+                expect(validators.min('-123.456', '1000')).toBe(false);
+            });
+
+            test('it should return true when a valid number above the given min value is passed', () => {
+                expect(validators.min('123456', '-1000')).toBe(true);
+                expect(validators.min('0', '-1000')).toBe(true);
+                expect(validators.min('-123456', '-1000000')).toBe(true);
+                expect(validators.min('123.456', '-1000')).toBe(true);
+                expect(validators.min('0.00000', '-1000')).toBe(true);
+                expect(validators.min('-123.456', '-1000')).toBe(true);
+            });
+        });
+
+        describe('For checkbox inputs', () => {
+            test('it should return true if the checkbox has no name', () => {
+                document.body.innerHTML = `
+                    <form id="form">
+                        <input id="checkbox1" type="checkbox" value="1"/>
+                        <input type="checkbox" value="2"/>
+                        <input type="checkbox" value="3"/>
+                        <input type="checkbox" value="4"/>
+                    </form>
+                `;
+
+                const form = document.getElementById('form');
+                const input = document.getElementById('checkbox1');
+                // @ts-ignore
+                input.pristine = { form };
+
+                expect(validators.min.apply(input, ['notused', '5'])).toBe(true);
+            });
+
+            test('it should return false if there are fewer checkboxes selected than the given min value', () => {
+                document.body.innerHTML = `
+                    <form id="form">
+                        <input id="checkbox1" name="test" type="checkbox" value="1"/>
+                        <input type="checkbox" name="test" value="2"/>
+                        <input type="checkbox" name="test" value="3"/>
+                        <input type="checkbox" name="test" value="4"/>
+                    </form>
+                `;
+
+                const form = document.getElementById('form');
+                const input = document.getElementById('checkbox1');
+                // @ts-ignore
+                input.pristine = { form };
+
+                const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]')) as HTMLInputElement[];
+                checkboxes.forEach(cb => { cb.checked = true; });
+                expect(validators.min.apply(input, ['notused', '5'])).toBe(false);
+            });
+
+            test('it should return true if there are the same amount of checkboxes selected as the given min value', () => {
+                document.body.innerHTML = `
+                    <form id="form">
+                        <input id="checkbox1" name="test" type="checkbox" value="1"/>
+                        <input type="checkbox" name="test" value="2"/>
+                        <input type="checkbox" name="test" value="3"/>
+                        <input type="checkbox" name="test" value="4"/>
+                    </form>
+                `;
+
+                const form = document.getElementById('form');
+                const input = document.getElementById('checkbox1');
+                // @ts-ignore
+                input.pristine = { form };
+
+                const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]')) as HTMLInputElement[];
+                checkboxes.forEach(cb => { cb.checked = true; });
+                expect(validators.min.apply(input, ['notused', '4'])).toBe(true);
+            });
+
+            test('it should return true if there are more checkboxes selected than the given min value', () => {
+                document.body.innerHTML = `
+                    <form id="form">
+                        <input id="checkbox1" name="test" type="checkbox" value="1"/>
+                        <input type="checkbox" name="test" value="2"/>
+                        <input type="checkbox" name="test" value="3"/>
+                        <input type="checkbox" name="test" value="4"/>
+                    </form>
+                `;
+
+                const form = document.getElementById('form');
+                const input = document.getElementById('checkbox1');
+                // @ts-ignore
+                input.pristine = { form };
+
+                const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]')) as HTMLInputElement[];
+                checkboxes.forEach(cb => { cb.checked = true; });
+                expect(validators.min.apply(input, ['notused', '3'])).toBe(true);
+            });
+        });
+    });
 });

@@ -10,13 +10,83 @@ describe('Validators', () => {
     });
 
     describe('required', () => {
-        test('it should return true when a value is present', () => {
-            expect(validators.required('123')).toBe(true);
-            expect(validators.required('123 456 abc def')).toBe(true);
+        describe('For text inputs', () => {
+            test('it should return true when a value is present', () => {
+                expect(validators.required('123')).toBe(true);
+                expect(validators.required('123 456 abc def')).toBe(true);
+            });
+
+            test('it should return false if a value is not present', () => {
+                expect(validators.required('')).toBe(false);
+            });
+        })
+
+        describe('For checkboxes', () => {
+            beforeEach(() => {
+                document.body.innerHTML = `
+                    <form id="form">
+                        <input type="checkbox" name="test" value="1" id="checkbox1"/>
+                        <input type="checkbox" name="test" value="2"/>
+                        <input type="checkbox" name="test" value="3"/>
+                        <input type="checkbox" name="test" value="4"/>
+                    </form>
+                `;
+            });
+
+            test('it should return true when one or more checkboxes from a group are checked', () => {
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
+                // @ts-ignore
+                input.pristine = { form };
+
+                input.checked = true;
+                expect(validators.required.apply(input, ['notused'])).toBe(true);
+
+                const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]')) as HTMLInputElement[];
+                checkboxes.forEach(cb => { cb.checked = true; });
+                expect(validators.required('123 456 abc def')).toBe(true);
+            });
+
+            test('it should return false if no checkboxes from a group are checked', () => {
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
+                // @ts-ignore
+                input.pristine = { form };
+
+                expect(validators.required.apply(input, ['notused'])).toBe(false);
+            });
         });
 
-        test('it should return false if a value is not present', () => {
-            expect(validators.required('')).toBe(false);
+        describe('For radio buttons', () => {
+            beforeEach(() => {
+                document.body.innerHTML = `
+                    <form id="form">
+                        <input type="radio" name="test" value="1" id="radio1"/>
+                        <input type="radio" name="test" value="2"/>
+                        <input type="radio" name="test" value="3"/>
+                        <input type="radio" name="test" value="4"/>
+                    </form>
+                `;
+            });
+
+            test('it should return true when a radio button from a group is selected', () => {
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('radio1') as HTMLInputElement;
+                // @ts-ignore
+                input.pristine = { form };
+
+                input.checked = true;
+                expect(validators.required.apply(input, ['notused'])).toBe(true);
+            });
+
+            test('it should return false if no radio button from a group is selected', () => {
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('radio1') as HTMLInputElement;
+                // @ts-ignore
+                input.pristine = { form };
+
+                expect(validators.required.apply(input, ['notused'])).toBe(false);
+            });
         });
     });
 

@@ -68,4 +68,33 @@ describe('Validators', () => {
             expect(validators.number('+123.45')).toBe(false);
         });
     });
+
+    describe('integer', () => {
+        test('it should return true when a value is not present', () => {
+            expect(validators.integer('')).toBe(true);
+        });
+
+        test('it should return true when a valid integer is passed', () => {
+            expect(validators.integer('123456')).toBe(true);
+            expect(validators.integer('0')).toBe(true);
+            expect(validators.integer('-123456')).toBe(true);
+        });
+
+        test('it should return false when a valid decimal is passed', () => {
+            expect(validators.integer('123.456')).toBe(false);
+            expect(validators.integer('0.00000')).toBe(false);
+            expect(validators.integer('-123.456')).toBe(false);
+        });
+
+        test('it should return false when an invalid number is passed', () => {
+            expect(validators.integer('a123456')).toBe(false);
+            expect(validators.integer('0ikjh')).toBe(false);
+            expect(validators.integer('-1234b56')).toBe(false);
+            expect(validators.integer('123.45,')).toBe(false);
+            expect(validators.integer('.')).toBe(false);
+            expect(validators.integer('0.0000.')).toBe(false);
+            expect(validators.integer('-123.45p')).toBe(false);
+            expect(validators.integer('+123.45')).toBe(false);
+        });
+    });
 });

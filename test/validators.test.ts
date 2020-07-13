@@ -97,4 +97,22 @@ describe('Validators', () => {
             expect(validators.integer('+123.45')).toBe(false);
         });
     });
+
+    describe('minlength', () => {
+        test('it should return true when a value is not present', () => {
+            expect(validators.minlength('', '6')).toBe(true);
+        });
+
+        test('it should return true if a string is longer than the given minlength', () => {
+            expect(validators.minlength('hello', '4')).toBe(true);
+        });
+
+        test('it should return true if a string is the same length as the given minlength', () => {
+            expect(validators.minlength('hello', '5')).toBe(true);
+        });
+
+        test('it should return false if a string is shorter than the given minlength', () => {
+            expect(validators.minlength('hello', '6')).toBe(false);
+        });
+    });
 });

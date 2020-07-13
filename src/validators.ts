@@ -39,9 +39,9 @@ export const min = function(val: string, limit: string): boolean {
 };
 
 export const max = function(val: string, limit: string): boolean {
-    return !val || (this.type === 'checkbox'
-        ? groupedElemCount(this.pristine.form, this) <= parseInt(limit)
-        : parseFloat(val) <= parseFloat(limit)
+    return  (this.type === 'checkbox'
+        ? !this.getAttribute('name') || groupedElemCount(this.pristine.form, this) <= parseInt(limit)
+        : !val || (number(val) && parseFloat(val) <= parseFloat(limit))
     );
 }
 

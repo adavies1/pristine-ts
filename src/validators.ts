@@ -32,9 +32,9 @@ export const required = function(val: string): boolean {
 }
 
 export const min = function(val: string, limit: string): boolean {
-    return !val || (this.type === 'checkbox'
+    return (this.type === 'checkbox'
         ? groupedElemCount(this.pristine.form, this) >= parseInt(limit)
-        : parseFloat(val) >= parseFloat(limit)
+        : !val || parseFloat(val) >= parseFloat(limit)
     );
 };
 

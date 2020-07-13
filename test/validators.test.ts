@@ -251,8 +251,8 @@ describe('Validators', () => {
                     </form>
                 `;
 
-                const form = document.getElementById('form');
-                const input = document.getElementById('checkbox1');
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
                 // @ts-ignore
                 input.pristine = { form };
 
@@ -262,15 +262,15 @@ describe('Validators', () => {
             test('it should return false if there are fewer checkboxes selected than the given min value', () => {
                 document.body.innerHTML = `
                     <form id="form">
-                        <input id="checkbox1" name="test" type="checkbox" value="1"/>
+                        <input type="checkbox" name="test" value="1" id="checkbox1"/>
                         <input type="checkbox" name="test" value="2"/>
                         <input type="checkbox" name="test" value="3"/>
                         <input type="checkbox" name="test" value="4"/>
                     </form>
                 `;
 
-                const form = document.getElementById('form');
-                const input = document.getElementById('checkbox1');
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
                 // @ts-ignore
                 input.pristine = { form };
 
@@ -282,15 +282,15 @@ describe('Validators', () => {
             test('it should return true if there are the same amount of checkboxes selected as the given min value', () => {
                 document.body.innerHTML = `
                     <form id="form">
-                        <input id="checkbox1" name="test" type="checkbox" value="1"/>
+                        <input type="checkbox" name="test" value="1" id="checkbox1"/>
                         <input type="checkbox" name="test" value="2"/>
                         <input type="checkbox" name="test" value="3"/>
                         <input type="checkbox" name="test" value="4"/>
                     </form>
                 `;
 
-                const form = document.getElementById('form');
-                const input = document.getElementById('checkbox1');
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
                 // @ts-ignore
                 input.pristine = { form };
 
@@ -302,15 +302,15 @@ describe('Validators', () => {
             test('it should return true if there are more checkboxes selected than the given min value', () => {
                 document.body.innerHTML = `
                     <form id="form">
-                        <input id="checkbox1" name="test" type="checkbox" value="1"/>
+                        <input type="checkbox" name="test" value="1" id="checkbox1"/>
                         <input type="checkbox" name="test" value="2"/>
                         <input type="checkbox" name="test" value="3"/>
                         <input type="checkbox" name="test" value="4"/>
                     </form>
                 `;
 
-                const form = document.getElementById('form');
-                const input = document.getElementById('checkbox1');
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
                 // @ts-ignore
                 input.pristine = { form };
 
@@ -368,8 +368,8 @@ describe('Validators', () => {
                     </form>
                 `;
 
-                const form = document.getElementById('form');
-                const input = document.getElementById('checkbox1');
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
                 // @ts-ignore
                 input.pristine = { form };
 
@@ -379,15 +379,15 @@ describe('Validators', () => {
             test('it should return false if there are more checkboxes selected than the given max value', () => {
                 document.body.innerHTML = `
                     <form id="form">
-                        <input id="checkbox1" name="test" type="checkbox" value="1"/>
+                        <input type="checkbox" name="test" value="1" id="checkbox1"/>
                         <input type="checkbox" name="test" value="2"/>
                         <input type="checkbox" name="test" value="3"/>
                         <input type="checkbox" name="test" value="4"/>
                     </form>
                 `;
 
-                const form = document.getElementById('form');
-                const input = document.getElementById('checkbox1');
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
                 // @ts-ignore
                 input.pristine = { form };
 
@@ -399,15 +399,15 @@ describe('Validators', () => {
             test('it should return true if there are the same amount of checkboxes selected as the given max value', () => {
                 document.body.innerHTML = `
                     <form id="form">
-                        <input id="checkbox1" name="test" type="checkbox" value="1"/>
+                        <input type="checkbox" name="test" value="1" id="checkbox1"/>
                         <input type="checkbox" name="test" value="2"/>
                         <input type="checkbox" name="test" value="3"/>
                         <input type="checkbox" name="test" value="4"/>
                     </form>
                 `;
 
-                const form = document.getElementById('form');
-                const input = document.getElementById('checkbox1');
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
                 // @ts-ignore
                 input.pristine = { form };
 
@@ -419,15 +419,15 @@ describe('Validators', () => {
             test('it should return true if there are less checkboxes selected than the given max value', () => {
                 document.body.innerHTML = `
                     <form id="form">
-                        <input id="checkbox1" name="test" type="checkbox" value="1"/>
+                        <input type="checkbox" name="test" value="1" id="checkbox1"/>
                         <input type="checkbox" name="test" value="2"/>
                         <input type="checkbox" name="test" value="3"/>
                         <input type="checkbox" name="test" value="4"/>
                     </form>
                 `;
 
-                const form = document.getElementById('form');
-                const input = document.getElementById('checkbox1');
+                const form = document.getElementById('form') as HTMLFormElement;
+                const input = document.getElementById('checkbox1') as HTMLInputElement;
                 // @ts-ignore
                 input.pristine = { form };
 

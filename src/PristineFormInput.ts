@@ -20,6 +20,7 @@ export class PristineFormInput {
     constructor(input: HTMLInputElement, pristineForm: PristineForm) {
         this.input = input as PristineFormInputElement;
         this.pristine = pristineForm;
+        this.validators = [] as ValidatorConfig[];
 
         // Init validators
         Array.from(this.input.attributes).forEach(attr => {

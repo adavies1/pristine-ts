@@ -14,7 +14,7 @@ const defaultConfig: PristineFormConfig = {
 let currentConfig: PristineFormConfig = {...defaultConfig};
 
 export class Pristine {
-    constructor(form: HTMLElement, config:PristineFormConfig = currentConfig, live = false) {
+    constructor(form: HTMLElement, config:PristineFormConfig = currentConfig, live:boolean = false) {
         return new PristineForm(form, config, live);
     }
 

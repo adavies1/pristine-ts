@@ -28,7 +28,7 @@ export const maxlength = (val: string, length: string): boolean => !val || val.l
 export const required = function(val: string): boolean {
     return (this.type === 'radio' || this.type === 'checkbox')
         ? Boolean(groupedElemCount(this.pristine.form, this))
-        : val !== undefined && val !== ''
+        : Boolean(val);
 }
 
 export const min = function(val: string, limit: string): boolean {

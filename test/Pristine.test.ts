@@ -4,7 +4,7 @@ import { defaultValidators } from '../src/validators';
 import { PristineFormConfig } from '../src/types';
 
 describe('Pristine', () => {
-    beforeAll(() => {
+    beforeEach(() => {
         document.body.innerHTML = `
             <form id="form1">
                 <input type="checkbox" name="test1" value="1" id="checkbox1"/>

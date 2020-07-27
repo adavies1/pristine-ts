@@ -9,10 +9,12 @@ export class PristineForm {
     form: HTMLElement;
     config: PristineFormConfig;
     live: boolean;
+    oldNoValidateValue: string;
     fields: PristineFormInput[];
 
     constructor(form: HTMLElement, config: PristineFormConfig, live: boolean) {
-        form.setAttribute("novalidate", "true");
+        this.oldNoValidateValue = form.getAttribute('novalidate');
+        form.setAttribute('novalidate', 'true');
 
         this.form = form;
         this.config = config;
@@ -60,6 +62,12 @@ export class PristineForm {
     destroy() {
         this.fields.forEach(field => field.destroy());
         this.fields = [] as PristineFormInput[];
+
+        if(this.oldNoValidateValue === null) {
+            this.form.removeAttribute('novalidate');
+        } else {
+            this.form.setAttribute('novalidate', this.oldNoValidateValue);
+        }
     };
 
     /***

@@ -43,7 +43,7 @@ export class PristineFormInput {
         this.validators.sort((a, b) => b.priority - a.priority);
 
         // Init error elements
-        this.errorClassElement = this.input.closest(this.pristine.config.classTo);
+        this.errorClassElement = this.input.closest(`.${this.pristine.config.classTo}`);
         if (this.pristine.config.classTo === this.pristine.config.errorTextParent) {
             this.errorTextParent = this.errorClassElement;
         } else {
@@ -150,7 +150,7 @@ export class PristineFormInput {
             this.errorClassElement.classList.remove(this.pristine.config.errorClass);
             this.errorClassElement.classList.remove(this.pristine.config.successClass);
         }
-        if (this.errorTextElement) {
+        if (this._errorTextElement) {
             this.errorTextElement.innerHTML = '';
             this.errorTextElement.style.display = 'none';
 
@@ -169,10 +169,9 @@ export class PristineFormInput {
             this.errorClassElement.classList.remove(this.pristine.config.successClass);
             this.errorClassElement.classList.add(this.pristine.config.errorClass);
         }
-        if (this.errorTextElement){
-            this.errorTextElement.innerHTML = this.errors.join('<br/>');
-            this.errorTextElement.style.display = this.errorTextElement.pristineDisplay || '';
-        }
+
+        this.errorTextElement.innerHTML = this.errors.join('<br/>');
+        this.errorTextElement.style.display = this.errorTextElement.pristineDisplay || '';
     }
 
     /**

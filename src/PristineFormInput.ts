@@ -21,12 +21,13 @@ export class PristineFormInput {
         this.errors = [] as string[];
         this.input = input as PristineFormInputElement;
         this.messages = {} as {[name: string]: string};
+        this.params = {} as {[name: string]: string[]};
         this.pristine = pristineForm;
         this.validators = [] as ValidatorConfig[];
 
         // Init validators
         Array.from(this.input.attributes).forEach(attr => {
-            if(attr.name === 'data-pristine-type') {
+            if(attr.name === 'data-pristine-type' || attr.name === 'type') {
                 this._initValidator(attr.value);
             }
             else if(/^data-pristine-(.+)-message/.test(attr.name)) {
@@ -37,9 +38,6 @@ export class PristineFormInput {
             }
             else if (ALLOWED_ATTRIBUTES.indexOf(attr.name)){
                 this._initValidator(attr.name, attr.value);
-            }
-            else if (attr.name === 'type'){
-                this._initValidator(attr.value);
             }
         });
         this.validators.sort((a, b) => b.priority - a.priority);

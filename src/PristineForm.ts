@@ -1,5 +1,5 @@
 import PristineFormInput from './PristineFormInput';
-import { PristineFormConfig, PristineFormInputElement } from './types';
+import { PristineFormConfig, PristineFormInputElement, ValidatorMessageFunction } from './types';
 import { toArray } from './utils';
 
 const NOT_PRISTINE_ELEMENT_MSG = 'The given element is not part of a Pristine validated form';
@@ -43,11 +43,11 @@ export class PristineForm {
      * @param elem => The dom element where the validator is applied to
      * @param fn => validator function
      * @param msg => message to show when validation fails. Supports templating. ${0} for the input's value, ${1} and
-     * so on are for the attribute values
+     * so on are for the attribute values. Supports functions.
      * @param priority => priority of the validator function, higher valued function gets called first.
      * @param halt => whether validation should stop for this field after current validation function
      */
-    addValidator(elem: HTMLElement | Iterable<HTMLElement>, fn: Function, msg: string, priority = 1, halt = false) {
+    addValidator(elem: HTMLElement | Iterable<HTMLElement>, fn: Function, msg: string | ValidatorMessageFunction, priority = 1, halt = false) {
         try {
             const pie = toArray(elem)[0] as PristineFormInputElement;
             pie.pristineInput.addValidator({name: 'custom', fn, msg, priority, halt});

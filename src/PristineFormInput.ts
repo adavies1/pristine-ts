@@ -13,12 +13,14 @@ export class PristineFormInput {
     errors: string[];
     input: PristineFormInputElement;
     messages: {[name: string]: string};
-    params: { [name: string]: string[] };
+    params: {[name: string]: string[]};
     pristine: PristineForm;
     validators: ValidatorConfig[];
 
     constructor(input: HTMLInputElement, pristineForm: PristineForm) {
+        this.errors = [] as string[];
         this.input = input as PristineFormInputElement;
+        this.messages = {} as {[name: string]: string};
         this.pristine = pristineForm;
         this.validators = [] as ValidatorConfig[];
 

@@ -101,20 +101,20 @@ export class PristineForm {
      * @param silent => do not show error messages, just return true/false
      * @returns {boolean} return true when valid false otherwise
      */
-    validate(input: HTMLElement | Iterable<HTMLElement>, silent: boolean = false) {
-        const fields = (input ? toArray(input) as PristineFormInputElement[] : this.fields.map(f => f.input)).map(i => i.pristineInput);
+    validate(input?: HTMLElement | Iterable<HTMLElement>, silent: boolean = false): boolean {
+        const fields = (input ? toArray(input) as PristineFormInputElement[] : this.fields.map(f => f.input))
         let valid = true;
 
         fields.forEach(field => {
             try {
-                if (field.validate()) {
-                    !silent && field.showSuccess();
+                if (field.pristineInput.validate()) {
+                    !silent && field.pristineInput.showSuccess();
                 } else {
                     valid = false;
-                    !silent && field.showError();
+                    !silent && field.pristineInput.showError();
                 }
             } catch(e) {
-                console.warn(NOT_PRISTINE_ELEMENT_MSG, field);
+                console.error(NOT_PRISTINE_ELEMENT_MSG, field);
             }
         });
 

@@ -170,8 +170,10 @@ export class PristineFormInput {
             this.errorClassElement.classList.add(this.pristine.config.errorClass);
         }
 
-        this.errorTextElement.innerHTML = this.errors.join('<br/>');
-        this.errorTextElement.style.display = this.errorTextElement.pristineDisplay || '';
+        if(this.hasErrors()) {
+            this.errorTextElement.innerHTML = this.errors.join('<br/>');
+            this.errorTextElement.style.display = this.errorTextElement.pristineDisplay || '';
+        }
     }
 
     /**

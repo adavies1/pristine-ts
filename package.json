@@ -1,12 +1,18 @@
 {
-  "dependencies": {
-    "typescript": "^3.9.6"
+  "name": "pristine-ts",
+  "version": "1.0.0",
+  "description": "A lightweight JavaScript validation library, based on the original pristine library",
+  "author": {
+    "name": "Alex Davies",
+    "email": "alexdavieswebdev@gmail.com"
   },
+  "license": "MIT",
+  "main": "dist/esm/Pristine.js",
   "scripts": {
-    "build": "webpack",
-    "dev": "webpack-dev-server --watch --config webpack-dev.config.js",
-    "test": "jest",
-    "test:watch": "karma start"
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && webpack",
+    "dev": "webpack serve --config webpack-dev.config.js",
+    "test": "jest --rootDir=test",
+    "test:watch": "jest --watchAll"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
@@ -16,7 +22,9 @@
     "babel-jest": "^26.1.0",
     "jest": "^26.1.0",
     "ts-loader": "^8.0.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "typescript": "^3.9.6",
+    "webpack": "^5.23.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }

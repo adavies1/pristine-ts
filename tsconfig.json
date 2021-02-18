@@ -1,12 +1,15 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",
+        "outDir": "./dist/esm",
         "noImplicitAny": true,
-        "module": "CommonJS",
-        "target": "es5",
+        "module": "ES2020",
+        "moduleResolution": "node",
+        "target": "es6",
         "allowJs": true,
-        "lib": ["es2015", "dom"],
+        "lib": ["es6", "dom", "dom.iterable"],
         "sourceMap": true,
         "declaration": true
-    }
+    },
+    "include": ["src/**/*"],
+    "exclude": ["src/**/*.test.*"]
 }

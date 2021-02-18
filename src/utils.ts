@@ -9,14 +9,6 @@ export function groupedElemCount(form: HTMLElement, input: HTMLElement): number 
 }
 
 /**
- * Returns true or false depending upon if the given object is a function or not
- * @param obj - The object to test
- */
-export function isFunction(obj: any): boolean {
-    return !!(obj && obj.constructor && obj.call && obj.apply);
-}
-
-/**
  * Takes a template string and fills in the parameters with values
  * @param msg - The template string (E.G: "Hello ${0}, my name is ${1}. Do you like the name ${1}?")
  * @param params - The array of values for the string variables to be replaced with. The order is important.
@@ -32,8 +24,11 @@ export function tmpl(msg: string, ...params: string[]) {
  */
 export function toArray<T>(input: Iterable<T> | T): T[] {
     if(typeof input === 'string') return [input];
-    if(Array.isArray(input)) return input;
-    const output = Array.from(input as Iterable<T>);
-    return output.length ? output : [input as T];
+    if(Array.isArray(input)) return input as T[];
+    try {
+        return [...input as Iterable<T>];
+    } catch(e) {
+        return [input as T];
+    }
 }
 

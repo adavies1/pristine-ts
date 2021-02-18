@@ -1,6 +1,6 @@
 import PristineForm from './PristineForm';
 import { ValidatorConfig, PristineFormErrorTextElement, PristineFormInputElement, ValidatorMessageFunction } from './types';
-import { isFunction, tmpl } from './utils';
+import { tmpl } from './utils';
 import { defaultValidators } from './validators';
 
 const ALLOWED_ATTRIBUTES = ["required", "min", "max", 'minlength', 'maxlength', 'pattern'];
@@ -26,7 +26,7 @@ export class PristineFormInput {
         this.validators = [] as ValidatorConfig[];
 
         // Init validators
-        Array.from(this.input.attributes).forEach(attr => {
+        [...this.input.attributes].forEach(attr => {
             if(attr.name === 'data-pristine-type' || attr.name === 'type') {
                 this._initValidator(attr.value);
             }
@@ -201,7 +201,7 @@ export class PristineFormInput {
             if (!validator.fn.apply(this.input, params)){
                 valid = false;
 
-                if (isFunction(validator.msg)) {
+                if (typeof validator.msg === 'function') {
                     this.errors.push((validator.msg as ValidatorMessageFunction)(this.input.value, params))
                 } else {
                     let msg = this.messages[validator.name] || validator.msg;

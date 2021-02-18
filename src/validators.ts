@@ -5,13 +5,13 @@ import { NamedValidators, ValidatorConfig, ValidatorOptions } from './types';
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 /***
- *
- * @param name => Name of the global validator
- * @param fn => validator function
- * @param msg => message to show when validation fails. Supports templating. ${0} for the input's value, ${1} and
+ * Adds a global validator, overwriting any existing validator with that name
+ * @param name - Name of the global validator
+ * @param fn - validator function
+ * @param msg - message to show when validation fails. Supports templating. ${0} for the input's value, ${1} and
  * so on are for the attribute values
- * @param priority => priority of the validator function, higher valued function gets called first.
- * @param halt => whether validation should stop for this field after current validation function
+ * @param priority - priority of the validator function, higher valued function gets called first.
+ * @param halt - whether validation should stop for this field after current validation function
  */
 export const addGlobalValidator = (name: string, fn: Function, msg: string = 'This field is invalid', priority: number =  1, halt: boolean = false) => {
     return defaultValidators[name] = { fn, name, msg: lang[name] || msg, priority, halt } as ValidatorConfig;

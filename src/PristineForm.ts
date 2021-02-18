@@ -19,7 +19,7 @@ export class PristineForm {
         this.form = form;
         this.config = config;
         this.live = live;
-        this.fields = (Array.from(form.querySelectorAll(SELECTOR)) as HTMLInputElement[])
+        this.fields = ([...form.querySelectorAll(SELECTOR)] as HTMLInputElement[])
             .map(input => new PristineFormInput(input, this));
     }
 
@@ -40,12 +40,12 @@ export class PristineForm {
 
     /***
      * Adds a custom validator to the specified form field element
-     * @param elem => The dom element where the validator is applied to
-     * @param fn => validator function
-     * @param msg => message to show when validation fails. Supports templating. ${0} for the input's value, ${1} and
+     * @param elem - The dom element where the validator is applied to
+     * @param fn - validator function
+     * @param msg - message to show when validation fails. Supports templating. ${0} for the input's value, ${1} and
      * so on are for the attribute values. Supports functions.
-     * @param priority => priority of the validator function, higher valued function gets called first.
-     * @param halt => whether validation should stop for this field after current validation function
+     * @param priority - priority of the validator function, higher valued function gets called first.
+     * @param halt - whether validation should stop for this field after current validation function
      */
     addValidator(elem: HTMLElement | Iterable<HTMLElement>, fn: Function, msg: string | ValidatorMessageFunction, priority = 1, halt = false) {
         try {
@@ -97,8 +97,8 @@ export class PristineForm {
 
     /***
      * Checks whether the form/input elements are valid
-     * @param input => input element(s), null/undefined for full form validation
-     * @param silent => do not show error messages, just return true/false
+     * @param input - input element(s), null/undefined for full form validation
+     * @param silent - do not show error messages, just return true/false
      * @returns {boolean} return true when valid false otherwise
      */
     validate(input?: HTMLElement | Iterable<HTMLElement>, silent: boolean = false): boolean {

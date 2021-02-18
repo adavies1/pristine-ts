@@ -19,22 +19,6 @@ describe('groupedElemCount', () => {
         (Array.from(document.querySelectorAll('input')) as HTMLInputElement[]).forEach(input => { input.checked = true; });
         expect(utils.groupedElemCount(form, input)).toBe(3);
     });
-})
-
-describe('isFunction', () => {
-    test('it should return true when a function is passed', () => {
-        const func = () => {};
-        expect(utils.isFunction(func)).toBe(true);
-    });
-
-    test('is should return false when anything other than a function is passed', () => {
-        expect(utils.isFunction(123)).toBe(false);
-        expect(utils.isFunction('123')).toBe(false);
-        expect(utils.isFunction(null)).toBe(false);
-        expect(utils.isFunction(undefined)).toBe(false);
-        expect(utils.isFunction([])).toBe(false);
-        expect(utils.isFunction({})).toBe(false);
-    });
 });
 
 describe('tmpl', () => {

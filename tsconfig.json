@@ -8,8 +8,8 @@
         "allowJs": true,
         "lib": ["es6", "dom", "dom.iterable"],
         "sourceMap": true,
-        "declaration": true
+        "declaration": true,
     },
     "include": ["src/**/*"],
-    "exclude": ["src/**/*.test.*"]
+    "exclude": ["**/*.test.*"]
 }

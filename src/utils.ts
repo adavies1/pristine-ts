@@ -1,5 +1,3 @@
-import { PristineFormInputElement } from "./types";
-
 /**
  * Returns the number of elements with the same name that are checked (useful for checkbox groups)
  * @param input - The PristineFormInputElement to match against
@@ -23,12 +21,10 @@ export function tmpl(msg: string, ...params: string[]) {
  * @param input - The item(s) to make into an array
  */
 export function toArray<T>(input: Iterable<T> | T): T[] {
-    if(typeof input === 'string') return [input];
-    if(Array.isArray(input)) return input as T[];
-    try {
-        return [...input as Iterable<T>];
-    } catch(e) {
-        return [input as T];
-    }
+    if(typeof input === 'string') return [input]; // Return strings inside a new array (avoid splitting into an array of chars)
+    if(Array.isArray(input)) return input as T[]; // Return normal arrays as they are
+    const arr = Array.from(input as Iterable<T>); // Array.from() will return an array of items if input is iterable, [] if not
+    if(!arr.length) arr.push(input as T);         // If array is empty (input not iterable), add input to array
+    return arr;
 }
 

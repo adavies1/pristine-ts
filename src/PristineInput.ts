@@ -1,32 +1,32 @@
-import PristineForm from './PristineForm';
-import { ValidatorConfig, PristineFormErrorTextElement, PristineFormInputElement, ValidatorMessageFunction } from './types';
+import Pristine from './Pristine';
+import { ValidatorConfig, PristineErrorTextElement, PristineInputElement, ValidatorMessageFunction } from './types';
 import { tmpl } from './utils';
 import { defaultValidators } from './validators';
 
 const ALLOWED_ATTRIBUTES = ["required", "min", "max", 'minlength', 'maxlength', 'pattern'];
 const PRISTINE_ERROR = 'pristine-error';
 
-export class PristineFormInput {
+export class PristineInput {
     errorClassElement: HTMLElement;
-    _errorTextElement: PristineFormErrorTextElement; // Don't access this when reading, use getter instead
+    _errorTextElement: PristineErrorTextElement; // Don't access this when reading, use getter instead
     errorTextParent: HTMLElement;
     errors: string[];
-    input: PristineFormInputElement;
+    input: PristineInputElement;
     messages: {[name: string]: string};
     params: {[name: string]: string[]};
-    pristine: PristineForm;
+    pristine: Pristine;
     validators: ValidatorConfig[];
 
-    constructor(input: HTMLInputElement, pristineForm: PristineForm) {
+    constructor(input: HTMLInputElement, pristineForm: Pristine) {
         this.errors = [] as string[];
-        this.input = input as PristineFormInputElement;
+        this.input = input as PristineInputElement;
         this.messages = {} as {[name: string]: string};
         this.params = {} as {[name: string]: string[]};
         this.pristine = pristineForm;
         this.validators = [] as ValidatorConfig[];
 
         // Init validators
-        [...this.input.attributes].forEach(attr => {
+        Array.from(this.input.attributes).forEach(attr => {
             if(attr.name === 'data-pristine-type' || attr.name === 'type') {
                 this._initValidator(attr.value);
             }
@@ -108,9 +108,9 @@ export class PristineFormInput {
     /**
      * This getter allows the errorTextElement element to be created on demand
      */
-    get errorTextElement(): PristineFormErrorTextElement {
+    get errorTextElement(): PristineErrorTextElement {
         if (this.errorTextParent && !this._errorTextElement) {
-            this._errorTextElement = document.createElement(this.pristine.config.errorTextTag) as PristineFormErrorTextElement;
+            this._errorTextElement = document.createElement(this.pristine.config.errorTextTag) as PristineErrorTextElement;
             this._errorTextElement.className = `${PRISTINE_ERROR} ${this.pristine.config.errorTextClass}`;
             this.errorTextParent.appendChild(this._errorTextElement);
             this._errorTextElement.pristineDisplay = this._errorTextElement.style.display;
@@ -129,7 +129,7 @@ export class PristineFormInput {
     /**
      * Returns the HTML element this instance is attached to
      */
-    getInput(): PristineFormInputElement {
+    getInput(): PristineInputElement {
         return this.input;
     }
 
@@ -215,4 +215,4 @@ export class PristineFormInput {
     }
 };
 
-export default PristineFormInput;
+export default PristineInput;

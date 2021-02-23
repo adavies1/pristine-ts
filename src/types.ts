@@ -1,5 +1,5 @@
-import PristineForm from "./PristineForm";
-import PristineFormInput from "./PristineFormInput";
+import Pristine from "./Pristine";
+import PristineInput from "./PristineInput";
 
 export type ValidatorConfig = {
     name: string,
@@ -23,7 +23,7 @@ export type NamedValidators = {
     [name: string]: ValidatorConfig;
 };
 
-export type PristineFormConfig = {
+export type PristineConfig = {
     classTo: string,
     errorClass: string,
     successClass: string,
@@ -32,7 +32,7 @@ export type PristineFormConfig = {
     errorTextClass: string
 };
 
-export type PristineFormOptions = {
+export type PristineOptions = {
     classTo?: string,
     errorClass?: string,
     successClass?: string,
@@ -41,11 +41,11 @@ export type PristineFormOptions = {
     errorTextClass?: string
 };
 
-export type PristineFormInputElement = HTMLInputElement & {
-    pristine: PristineForm;
-    pristineInput: PristineFormInput;
+export type PristineInputElement = HTMLInputElement & {
+    pristine: Pristine;
+    pristineInput: PristineInput;
 }
 
-export type PristineFormErrorTextElement = HTMLElement & {
+export type PristineErrorTextElement = HTMLElement & {
     pristineDisplay: string
 };

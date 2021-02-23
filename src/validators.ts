@@ -1,6 +1,6 @@
 import lang from './lang'
 import { groupedElemCount } from './utils';
-import { NamedValidators, ValidatorConfig, ValidatorOptions } from './types';
+import { NamedValidators, ValidatorConfig } from './types';
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
